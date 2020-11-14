@@ -6,7 +6,9 @@ Created on Sat Nov 14 12:11:17 2020
 @author: alixdelannoy
 """
 
-#Test
+#Test branche
 
-for i in range(10):
+i=0
+while i<10:
+    i=i+1
     print(i)
