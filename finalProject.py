@@ -12,11 +12,6 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
-
-#Répertoire de travail
-os.getcwd()
-os.chdir('/Users/alixdelannoy/Desktop/3A/MachineLearning/finalProject')
-
 #Chargement des données
 data=pd.read_csv('Radar_Traffic_Counts.csv')
 
