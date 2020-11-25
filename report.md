@@ -6,25 +6,36 @@
 
 # Partie 1 : Les données
 
-Les données proviennent du site [Kaggle](https://www.kaggle.com/vinayshanbhag/radar-traffic-data "Kaggle").
+### Généralités
 
-Il s'agit des données de traffic collectées par des capteurs radar à Austin aux États-Unis. Notre but est d'utiliser ces données pour entrainer un modèle de deep learning qui sera capable de prévoir le traffic futur. 
+Les données proviennent du site [Kaggle](https://www.kaggle.com/vinayshanbhag/radar-traffic-data "Kaggle"). <br/>
+Il s'agit des données de traffic collectées par des capteurs radar à Austin aux États-Unis. Notre but est d'utiliser ces données pour entrainer un modèle de deep learning qui sera capable de prévoir le traffic futur. <br/> 
 
 Voici un aperçu des données : 
 
 
+<img width="1121" alt="Capture d’écran 2020-11-25 à 15 20 51" src="https://user-images.githubusercontent.com/47599816/100239583-dba72780-2f31-11eb-9775-0e7c7e41ae6e.png">
+
 
 Il y a trois types d'informations dans chacune des lignes : 
 
-LOCATION : Les 3 premières colonnes décrivent les emplacements de capteurs de traffic 
-TEMPS : Les 7 suivantes concernent le moment ou la donnée de traffic a été captée 
-TRAFFIC : Les 2 dernières concernent la donnée du traffic (direction et volume, à noter que le volume de traffic a été normalisé)
+*LOCATION* : Les 3 premières colonnes décrivent les emplacements de capteurs de traffic <br/>
+*TIME* : Les 7 suivantes concernent le moment ou la donnée de traffic a été captée <br/>
+*TRAFFIC* : Les 2 dernières concernent la donnée du traffic (direction et volume) <br/>
 
 De plus, voici un tableau qui résume les données : 
 
+<img width="1027" alt="Capture d’écran 2020-11-25 à 15 03 09" src="https://user-images.githubusercontent.com/47599816/100239588-dcd85480-2f31-11eb-9a9f-4fee6d65cc02.png">
+
+**A RETENIR** : <br/>
+* Il n'y a pas de "trous" dans nos données, toutes les listes sont complètes
+* Nous disposons de 4 603 861 lignes
+* Nous nous intéressons à une période de 3 ans (de 2017 à 2019)
+* Nous nous intéressons à 23 emplacements (location_name)
+* Notre but est de prévoir des données de traffic (colonne Volume) pour chaque emplacement dans chaque direction à cet emplacement i.e. par couple (location_name,Direction)
 
 
-
+### Détails
 
 
 
