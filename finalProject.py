@@ -42,11 +42,4 @@ traffic_volumes_normalized = scaler.fit_transform(traffic_volumes.reshape(-1, 1)
 data["Volume"] = traffic_volumes_normalized
 
 
-a = 0
-for i in range(3):
-    a += 1
-    print(a)
-
-
-
 
