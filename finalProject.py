@@ -42,4 +42,3 @@ traffic_volumes_normalized = scaler.fit_transform(traffic_volumes.reshape(-1, 1)
 data["Volume"] = traffic_volumes_normalized
 
 
-
