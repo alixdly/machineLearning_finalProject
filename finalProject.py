@@ -7,7 +7,6 @@ Created on Sat Nov 14 12:11:17 2020
 """
 
 #Librairies utiles
-import os
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
@@ -35,10 +34,10 @@ def summary(df):
 
 infos=summary(data)
 
+#Ouverture en créant un dictionnaire qui met une donnée par jour
+
 #Normaliser les données
 traffic_volumes=np.array(data["Volume"])
 scaler = MinMaxScaler(feature_range=(0, 1))
 traffic_volumes_normalized = scaler.fit_transform(traffic_volumes.reshape(-1, 1))
 data["Volume"] = traffic_volumes_normalized
-
-
