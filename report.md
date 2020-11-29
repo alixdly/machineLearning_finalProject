@@ -37,7 +37,7 @@ De plus, voici un tableau qui résume les données :
 
 # Partie 2 : Un premier modèle : Convolutional Neural Network (CNN)
 
-En premier "essai", j'ai décidé d'implémenter le CNN le plus "basique", celui de la correction du dernier DM, pour d'abord être sur de bien avoir compris la correction mais aussi pour prendre en main les données et faire plusieurs essais : prévoir la prochaine heure en fonction de la journée, prévoir le prochain jour en fonction de la semaine, etc... pour mieux connaître les données.
+En premier "essai", nous avons décidé d'implémenter le CNN le plus "basique", celui de la correction du dernier DM, pour d'abord être sur de bien avoir compris la correction mais aussi pour prendre en main les données et faire plusieurs essais : prévoir la prochaine heure en fonction de la journée, prévoir le prochain jour en fonction de la semaine, etc... pour mieux connaître les données.
 
 
 
