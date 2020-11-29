@@ -34,8 +34,6 @@ def summary(df):
 
 infos=summary(data)
 
-#Ouverture en créant un dictionnaire qui met une donnée par jour
-
 #Normaliser les données
 traffic_volumes=np.array(data["Volume"])
 scaler = MinMaxScaler(feature_range=(0, 1))
