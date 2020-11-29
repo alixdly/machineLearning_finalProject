@@ -1,29 +1,27 @@
 #ImplÃ©mentation de la correction du projet "Predict Future Sales" de mi-module pour comprendre la sliding window
 
 dsi2c = {} #dictionaire des ventes par (shop,item)
-lastmonth=-1
+lasthour=-1
 #on ouvre le fichier sales_train.csv et on rÃ©cupÃ¨re les infos qui nous intÃ©resse
 with open("Radar_Traffic_Counts.csv","r") as f:
     for l in f: break
     for l in f:
         c=l.split(",")
-        year=int(c[3])
-        month=int(c[4])
-        if year==2017:
-            date=month
-        elif year==2018:
-            date=12+month
-        else:
-            date=24+month
-        if date>lastmonth: lastmonth=date
-        emplacement = c[0]
-        direction = c[-2]
-        count = float(c[-1])
-        key = (emplacement,direction)
-        seq = dsi2c[key] if key in dsi2c else []
-        seq += [(date,count)]
-        dsi2c[key] = seq
-print("nsequences %d %d" % (len(dsi2c.keys()),lastmonth))
+        if c[0]==' CAPITAL OF TEXAS HWY / LAKEWOOD DR':
+            if int(c[3])==2018: #2018
+                if int(c[4])==12: #décembre
+                    if int(c[5])==17: #17 décembre
+                        date=int(c[7])
+                        if date>lasthour: lasthour=date
+                        emplacement = c[0]
+                        direction = c[-2]
+                        count = float(c[-1])
+                        key = (emplacement,direction)
+                        seq = dsi2c[key] if key in dsi2c else []
+                        seq += [(date,count)]
+                        dsi2c[key] = seq
+                        
+print("nsequences %d %d" % (len(dsi2c.keys()),lasthour))
 
 
 import torch
@@ -38,7 +36,7 @@ si2X, si2Y = {}, {}
 dsi2X, dsi2Y = {}, {}
 for s,i in dsi2c.keys():
     seq = dsi2c[(s,i)]
-    if len(seq)<=minlen: continue
+    if len(seq)<=minlen: continue #passer à l'itération suivante, ne pas prendre en compte ce couple 
     xlist, ylist = [], []
     for m in range(minlen, len(seq)-1):
         xx = [seq[z][1]/vnorm for z in range(m)]
