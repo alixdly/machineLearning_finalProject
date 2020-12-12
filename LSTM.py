@@ -53,21 +53,32 @@ Dsud = Dsud.groupby(['Year', 'Month', 'Day'], as_index = False).sum()
 
 all_data = Dnord.Volume.values
 
+"""
+On dipose maintenant des donénes au bon format
+Nous allons à présent séparer notre jeu de donénes en un jeu de d'apprentissage
+et un jeu de test.
+"""
 
 
-test_data_size = int(len(all_data)/2)
+
+test_data_size = int(len(all_data) /3)
 
 train_data = all_data[:-test_data_size]
 test_data = all_data[-test_data_size:]
 
 scaler = MinMaxScaler(feature_range=(-1, 1))
 train_data = scaler.fit_transform(train_data .reshape(-1, 1))
+test_data = scaler.fit_transform(test_data.reshape(-1, 1))
 
 train_data = torch.FloatTensor(train_data).view(-1)
+test_data = torch.FloatTensor(test_data).view(-1)
+
+print(len(all_data))
+print(len(train_data))
+print(len(test_data))
 
 
-
-train_window = 100
+train_window = 30
 
 def create_inout_sequences(input_data, tw):
     inout_seq = []
@@ -79,9 +90,10 @@ def create_inout_sequences(input_data, tw):
     return inout_seq
 
 train_inout_seq = create_inout_sequences(train_data, train_window)
+test_inout_seq = create_inout_sequences(train_data, train_window)
 
 class LSTM(nn.Module):
-    def __init__(self, input_size=1, hidden_layer_size=20, output_size=1):
+    def __init__(self, input_size=1, hidden_layer_size=10, output_size=1):
         super().__init__()
         self.hidden_layer_size = hidden_layer_size
 
@@ -96,72 +108,59 @@ class LSTM(nn.Module):
         lstm_out, self.hidden_cell = self.lstm(input_seq.view(len(input_seq) ,1, -1), self.hidden_cell)
         predictions = self.linear(lstm_out.view(len(input_seq), -1))
         return predictions[-1]
-    
-model = LSTM()
-loss_function = nn.MSELoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
-epochs = 100
-train_loss = []
-
-for i in range(epochs):
+def Train():
+    running_loss = 0
+    model.train()
     for seq, labels in train_inout_seq:
         optimizer.zero_grad()
         model.hidden_cell = (torch.zeros(1, 1, model.hidden_layer_size),
                         torch.zeros(1, 1, model.hidden_layer_size))
-
-        y_pred = model(seq)
-
-        single_loss = loss_function(y_pred, labels)
-        single_loss.backward()
+        preds = model(seq)
+        
+        loss = loss_function(preds, labels)
+        loss.backward()
         optimizer.step()
-
-    if i%25 == 1:
-        print(f'epoch: {i:3} loss: {single_loss.item():10.8f}')
+        running_loss += loss
     
-    train_loss.append(single_loss.detach().numpy())
+    train_loss = running_loss/len(train_inout_seq)
+    train_losses.append(train_loss.detach().numpy())
+    if i%25 == 0:
+        print("epoch : ", i, "    loss : ", train_loss)
+    
+    #print(f'train_loss {train_loss}')
+    
+def Valid():
+    running_loss = 0
+    model.eval()
+    with torch.no_grad():
+        for seq, labels in train_inout_seq:
+            optimizer.zero_grad()
+            model.hidden_cell = (torch.zeros(1, 1, model.hidden_layer_size),
+                             torch.zeros(1, 1, model.hidden_layer_size))
 
-print(f'epoch: {i:3} loss: {single_loss.item():10.10f}')
+            preds = model(seq)
+            
+            loss = loss_function(preds,labels)
+            running_loss += loss
+            
+        valid_loss = running_loss/len(test_inout_seq)
+        valid_losses.append(valid_loss.detach().numpy())
+        #print(f'valid_loss {valid_loss}')
+    
+model = LSTM()
+loss_function = nn.MSELoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-#def Train():
-#    running_loss = 0
-#    model.train()
-#    for seq, labels in train_inout_seq:
-#        optimizer.zero_grad()
-#        model.hidden_cell = (torch.zeros(1, 1, model.hidden_layer_size),
-#                        torch.zeros(1, 1, model.hidden_layer_size))
-#        preds = model(seq)
-#        
-#        loss = loss_function(preds, labels)
-#        loss.backward()
-#        optimizer.step()
-#        running_loss += loss
-#    
-#    train_loss = running_loss/len(train_out_seq)
-#    train_losses.append(train_loss.detach().numpy())
-#    
-#    #print(f'train_loss {train_loss}')
-#    
-#def Valid():
-#    running_loss = 0
-#    model.eval()
-#    with torch.no_grad():
-#        for idx, (inputs, labels) in enumerate(valid_loader):
-#            inputs = inputs.to(device)
-#            labels = labels.to(device)
-#            optimizer.zero_grad()
-#            preds = model(inputs.float())
-#            
-#            labels = labels.type(torch.FloatTensor)
-#            
-#            loss = error(preds,labels)
-#            running_loss += loss
-#            
-#        valid_loss = running_loss/len(valid_loader)
-#        valid_losses.append(valid_loss.detach().numpy())
-#        #print(f'valid_loss {valid_loss}')
+epochs = 250
+train_losses = []
+valid_losses = []
 
-fut_pred = 100
+for i in range(epochs):
+    Train()
+    Valid()
+
+fut_pred = 30
 
 test_inputs = train_data[-train_window:].tolist()
 print(test_inputs)
@@ -185,7 +184,7 @@ plt.plot(all_data)
 plt.plot(x, actual_predictions)
 
 plt.figure()
-plt.plot(train_loss)
+plt.plot(train_losses)
  
 
 
