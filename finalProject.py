@@ -39,3 +39,36 @@ traffic_volumes=np.array(data["Volume"])
 scaler = MinMaxScaler(feature_range=(0, 1))
 traffic_volumes_normalized = scaler.fit_transform(traffic_volumes.reshape(-1, 1))
 data["Volume"] = traffic_volumes_normalized
+
+
+#Fonction pour ouvrir les données en séléctionnant ce qu'on veut
+#On somme les volumes de traffic par jour
+def DataReader(csv,year=None,month=None, location=None, direction=None):
+    #Ouvrir le csv et construire une colonne avec la date complète; Année+Mois+jour+TimeBin
+    data = pd.read_csv(csv, parse_dates={"date": [3, 4, 5, 9]}, keep_date_col=True)
+    #Select wanted year
+    if year is not None:
+        data = data.loc[data["Year"] == str(year)]
+    #Select wanted month
+    if month is not None:
+        data = data.loc[data["Month"] == str(month)]
+    #Select wanted location and traffic direction
+    if location is not None:
+        data = data[(data["location_name"] == location)]
+        data = data.loc[data["Direction"] == direction]
+        data = (data.groupby("date")
+            .agg({"Volume": "sum"})
+            .sort_values("date")#on trie le dataframe par date
+            .reset_index()
+        )
+    #Nomaliser
+    traffic_volumes=np.array(data["Volume"])
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    traffic_volumes_normalized = scaler.fit_transform(traffic_volumes.reshape(-1, 1))
+    data["Volume"] = traffic_volumes_normalized
+    return data
+
+test=DataReader('Radar_Traffic_Counts.csv',location=' CAPITAL OF TEXAS HWY / LAKEWOOD DR',direction='NB')
+
+
+
