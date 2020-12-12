@@ -1,27 +1,41 @@
-#ImplÃ©mentation de la correction du projet "Predict Future Sales" de mi-module pour comprendre la sliding window
+#Implémentation de la correction du projet "Predict Future Sales"
+
+#Librairies utiles
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+
+#Chargement des données
+data=pd.read_csv('Radar_Traffic_Counts.csv')
+
+#Normaliser les données
+traffic_volumes=np.array(data["Volume"])
+scaler = MinMaxScaler(feature_range=(0, 1))
+traffic_volumes_normalized = scaler.fit_transform(traffic_volumes.reshape(-1, 1))
+data["Volume"] = traffic_volumes_normalized
+
+#On se concentre sur une localisation : CAPITAL OF TEXAS HWY / LAKEWOOD DR
+D2 = data.loc[data.location_name == ' CAPITAL OF TEXAS HWY / LAKEWOOD DR']
+D2.to_csv('Traffic_CapitalOfTexasHWY.csv', index=False, encoding='utf-8')
+#Pour cette localisation, on a deux directions : North Bound et South Bound
 
 dsi2c = {} #dictionaire des ventes par (shop,item)
 lasthour=-1
-#on ouvre le fichier sales_train.csv et on rÃ©cupÃ¨re les infos qui nous intÃ©resse
-with open("Radar_Traffic_Counts.csv","r") as f:
+#on ouvre le fichier et on récupère les infos qui nous intéresse
+with open("Traffic_CapitalOfTexasHWY.csv","r") as f:
     for l in f: break
     for l in f:
         c=l.split(",")
-        if c[0]==' CAPITAL OF TEXAS HWY / LAKEWOOD DR':
-            if int(c[3])==2018: #2018
-                if int(c[4])==12: #décembre
-                    if int(c[5])==17: #17 décembre
-                        date=int(c[7])
-                        if date>lasthour: lasthour=date
-                        emplacement = c[0]
-                        direction = c[-2]
-                        count = float(c[-1])
-                        key = (emplacement,direction)
-                        seq = dsi2c[key] if key in dsi2c else []
-                        seq += [(date,count)]
-                        dsi2c[key] = seq
-                        
-print("nsequences %d %d" % (len(dsi2c.keys()),lasthour))
+        hour = int(c[1])
+        if date>lastmonth: lastmonth=date
+        shop = int(c[2])
+        item = int(c[3])
+        count = float(c[-1])
+        key = (shop,item)
+        seq = dsi2c[key] if key in dsi2c else []
+        seq += [(date,count)]
+        dsi2c[key] = seq
+print("nsequences %d %d" % (len(dsi2c.keys()),lastmonth))
 
 
 import torch
