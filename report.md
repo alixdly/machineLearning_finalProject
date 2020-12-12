@@ -32,12 +32,12 @@ De plus, voici un tableau qui résume les données :
 * Nous disposons de 4 603 861 lignes
 * Nous nous intéressons à une période de 3 ans (de 2017 à 2019)
 * Nous nous intéressons à 23 emplacements (location_name)
-* **Notre but est de prévoir des données de traffic (colonne Volume) pour chaque emplacement dans chaque direction à cet emplacement i.e. par couple (location_name,Direction) à une fréquence que nous avons encore à définir**
+* **Le but est de prévoir des données de traffic (colonne Volume) pour chaque emplacement dans chaque direction à cet emplacement i.e. par couple (location_name,Direction) sur une période de temps à définir.**
 
 
 # Partie 2 : Un premier modèle : Convolutional Neural Network (CNN)
 
-En premier "essai", nous avons décidé d'implémenter le CNN le plus "basique", celui de la correction du dernier DM, pour d'abord être sur de bien avoir compris la correction mais aussi pour prendre en main les données et faire plusieurs essais : prévoir la prochaine heure en fonction de la journée, prévoir le prochain jour en fonction de la semaine, etc... pour mieux connaître les données.
+
 
 
 
