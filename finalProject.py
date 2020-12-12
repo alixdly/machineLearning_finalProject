@@ -54,13 +54,10 @@ def DataReader(csv,year=None,month=None, location=None, direction=None):
         data = data.loc[data["Month"] == str(month)]
     #Select wanted location and traffic direction
     if location is not None:
-        data = data[(data["location_name"] == location)]
+        data = data.loc[data["location_name"] == location]
         data = data.loc[data["Direction"] == direction]
-        data = (data.groupby("date")
-            .agg({"Volume": "sum"})
-            .sort_values("date")#on trie le dataframe par date
-            .reset_index()
-        )
+    data = data[['Year', 'Month', 'Day', 'Volume']]
+    data=data.groupby(['Year', 'Month', 'Day'], as_index = False).sum()
     #Nomaliser
     traffic_volumes=np.array(data["Volume"])
     scaler = MinMaxScaler(feature_range=(0, 1))
@@ -70,5 +67,16 @@ def DataReader(csv,year=None,month=None, location=None, direction=None):
 
 test=DataReader('Radar_Traffic_Counts.csv',location=' CAPITAL OF TEXAS HWY / LAKEWOOD DR',direction='NB')
 
+#Fonction qui permet de séparer les données en 
+def DataSplit(data, time_window):
+    inout_seq = []
+    L = len(data)
+    for i in range(L-time_window):
+        train_seq = data[i:i+time_window]
+        train_label = data[i+time_window:i+time_window+1]
+        inout_seq.append((train_seq ,train_label))
+    return inout_seq
+
+test2=DataSplit(test.Volume,30)
 
 
