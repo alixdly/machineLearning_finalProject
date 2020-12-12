@@ -15,18 +15,20 @@ traffic_volumes_normalized = scaler.fit_transform(traffic_volumes.reshape(-1, 1)
 data["Volume"] = traffic_volumes_normalized
 
 #On se concentre sur une localisation : CAPITAL OF TEXAS HWY / LAKEWOOD DR
-D2 = data.loc[data.location_name == ' CAPITAL OF TEXAS HWY / LAKEWOOD DR']
-D2.to_csv('Traffic_CapitalOfTexasHWY.csv', index=False, encoding='utf-8')
-#Pour cette localisation, on a deux directions : North Bound et South Bound
+data = data.loc[data.location_name == ' CAPITAL OF TEXAS HWY / LAKEWOOD DR']
+data = data.loc[data.Direction == 'NB']
+data = data.loc[data.Year==2019]
+data.to_csv('Traffic_CapitalOfTexasHWY.csv', index=False, encoding='utf-8')
 
-dsi2c = {} #dictionaire des ventes par (shop,item)
-lasthour=-1
+dsi2c = {}
+lastday=-1
 #on ouvre le fichier et on récupère les infos qui nous intéresse
 with open("Traffic_CapitalOfTexasHWY.csv","r") as f:
     for l in f: break
     for l in f:
         c=l.split(",")
-        hour = int(c[1])
+        print(c)
+        day = int(c[1])
         if date>lastmonth: lastmonth=date
         shop = int(c[2])
         item = int(c[3])
