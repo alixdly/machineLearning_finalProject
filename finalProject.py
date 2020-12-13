@@ -10,6 +10,7 @@ Created on Sat Nov 14 12:11:17 2020
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
+from torch.utils.data import Dataset
 
 #Chargement des données
 data=pd.read_csv('Radar_Traffic_Counts.csv')
@@ -42,10 +43,14 @@ data["Volume"] = traffic_volumes_normalized
 
 
 #Fonction pour ouvrir les données en séléctionnant ce qu'on veut
-#On somme les volumes de traffic par jour
 def DataReader(csv,year=None,month=None, location=None, direction=None):
     #Ouvrir le csv et construire une colonne avec la date complète; Année+Mois+jour+TimeBin
     data = pd.read_csv(csv, parse_dates={"date": [3, 4, 5, 9]}, keep_date_col=True)
+    #Normaliser
+    traffic_volumes=np.array(data["Volume"])
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    traffic_volumes_normalized = scaler.fit_transform(traffic_volumes.reshape(-1, 1))
+    data["Volume"] = traffic_volumes_normalized
     #Select wanted year
     if year is not None:
         data = data.loc[data["Year"] == str(year)]
@@ -56,27 +61,24 @@ def DataReader(csv,year=None,month=None, location=None, direction=None):
     if location is not None:
         data = data.loc[data["location_name"] == location]
         data = data.loc[data["Direction"] == direction]
-    data = data[['Year', 'Month', 'Day', 'Volume']]
-    data=data.groupby(['Year', 'Month', 'Day'], as_index = False).sum()
-    #Nomaliser
-    traffic_volumes=np.array(data["Volume"])
-    scaler = MinMaxScaler(feature_range=(0, 1))
-    traffic_volumes_normalized = scaler.fit_transform(traffic_volumes.reshape(-1, 1))
-    data["Volume"] = traffic_volumes_normalized
+    data = data.groupby("date").agg({"Volume": "sum"}).sort_values("date").reset_index()
+    data = data.set_index('date')
     return data
 
-test=DataReader('Radar_Traffic_Counts.csv',location=' CAPITAL OF TEXAS HWY / LAKEWOOD DR',direction='NB')
 
-#Fonction qui permet de séparer les données en 
-def DataSplit(data, time_window):
-    inout_seq = []
-    L = len(data)
-    for i in range(L-time_window):
-        train_seq = data[i:i+time_window]
-        train_label = data[i+time_window:i+time_window+1]
-        inout_seq.append((train_seq ,train_label))
-    return inout_seq
-
-test2=DataSplit(test.Volume,30)
+class RadarDataset(Dataset):
+    def __init__(self,feature,target):
+        self.feature = feature
+        self.target = target
+    
+    def __len__(self):
+        return len(self.feature)
+    
+    def __getitem__(self,idx):
+        item = self.feature[idx]
+        label = self.target[idx]
+        print(label.shape)
+        
+        return item,label
 
 
