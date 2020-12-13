@@ -37,6 +37,7 @@ De plus, voici un tableau qui résume les données :
 
 # Partie 2 : Un premier modèle : Convolutional Neural Network (CNN)
 
+### Explications
 Dans cette partie, nous avons décidé tout d'abord de nous intéresser à la donnée de traffic tous les quarts d'heure pour un emplacement et une direction et de construire un CNN capable de prédire correctement le traffic futur. 
 
 Nous préparons trois sets de données : 
@@ -56,6 +57,7 @@ Test_set : Janvier 2019
 Pour utiliser un modèle CNN pour prédire des données à 1 dimension, nous procédons de la manière suivante : \
 Nous séparons nos données en des sous-séquences de taille 3 (input) auxquelles nous associons une séquence de taille 1 (ouptput). Notre modèle doit apprendre à prédire l'output en fonction de l'input. Nous allons essayer plusieurs architectures de CNN et d'hyperparamètres sur nos données. 
 
+### CNN
 Notre CNN, le plus simple possible, est construit de la manière suivante : 
 
 1 couche de convolution \
@@ -96,5 +98,6 @@ Si on souhaite augmenter le nombre d'époques, par exemple à 1000 on obtient le
 
 qui augmentent le temps de calcul mais ne sont pas significativement meilleur. 
 
+Enfin, si on applique notre modèle entrainé aux données du mois de janvier 2019, nous obtenons les résultats suivants : 
 
-
+<img width="668" alt="Capture d’écran 2020-12-13 à 17 47 52" src="https://user-images.githubusercontent.com/47599816/102018181-e05e3f00-3d6b-11eb-87af-97720e6add88.png">
