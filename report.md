@@ -130,3 +130,5 @@ Emplacement : '400 BLK AZIE MORTON RD (South of Barton Springs Rd)' ,Direction :
 Par exemple, pour cette instance, on peut voir que notre modèle n'est pas du tout performant puisqu'il prévoit le pic de traffic bas du 5ème jour trop tard, mais aussi un deuxième pic inexistant 2 jours après. 
 
 Nous allons donc tester un autre modèle de deep learning. 
+
+# Partie 3 : Une autre modèle : le LSTM
