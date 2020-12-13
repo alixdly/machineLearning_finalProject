@@ -10,7 +10,6 @@ Created on Sat Nov 14 12:11:17 2020
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
-from torch.utils.data import Dataset
 
 #Chargement des données
 data=pd.read_csv('Radar_Traffic_Counts.csv')
@@ -46,6 +45,7 @@ data["Volume"] = traffic_volumes_normalized
 def DataReader(csv,year=None,month=None, location=None, direction=None):
     #Ouvrir le csv et construire une colonne avec la date complète; Année+Mois+jour+TimeBin
     data = pd.read_csv(csv, parse_dates={"date": [3, 4, 5, 9]}, keep_date_col=True)
+    data=data.astype({'Volume': 'float'})
     #Normaliser
     traffic_volumes=np.array(data["Volume"])
     scaler = MinMaxScaler(feature_range=(0, 1))
