@@ -39,6 +39,7 @@ De plus, voici un tableau qui résume les données :
 
 ## Explications
 Dans cette partie, nous avons décidé tout d'abord de nous intéresser à la donnée de traffic jour par jour pour un emplacement et une direction et de construire un CNN capable de prédire correctement le traffic futur. 
+Source : Nous avons utilisé le notebook Kaggle suivant pour comprendre et implémenter le CNN - https://www.kaggle.com/hanjoonchoe/cnn-time-series-forecasting-with-pytorch
 
 Nous préparons trois sets de données : 
 - train_set : le set de données qui va servir à l'entrainement des paramètres du modèle 
