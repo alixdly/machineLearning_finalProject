@@ -51,6 +51,10 @@ Direction : North Bound
 
 Train_set : de septembre 2017 à septembre 2018 \
 Valid_set : de octobre 2018 à décembre 2018 \ 
+Test_set : Janvier 2019
+
+Pour utiliser un modèle CNN pour prédire des données à 1 dimension, nous procédons de la manière suivante : \
+Nous séparons nos données en des sous-séquences de taille 3 (input) auxquelles nous associons une séquence de taille 1 (ouptput). Notre modèle doit apprendre à prédire l'output en fonction de l'input. Nous allons essayer plusieurs architectures de CNN et d'hyperparamètres sur nos données. 
 
 Notre CNN, le plus simple possible, est construit de la manière suivante : 
 
@@ -76,14 +80,21 @@ lr = 0.001, epochs=100
 
 <img width="482" alt="Capture d’écran 2020-12-13 à 17 15 09" src="https://user-images.githubusercontent.com/47599816/102017371-ea317380-3d66-11eb-8c07-312b4b54cf37.png">
 
-On peut voir que le training loss remonte avant de recommencer à descendre, ce qui n'est pas satisfaisant.
+On peut voir que le training loss remonte avant de recommencer à descendre, ce qui n'est pas satisfaisant, mais on obtient tout de même à l'issue des 100 époques un modèle aussi satisfaisant que précedemment.
 
 lr = 0.0001, epochs=100
 
 <img width="497" alt="Capture d’écran 2020-12-13 à 17 16 09" src="https://user-images.githubusercontent.com/47599816/102017372-eb62a080-3d66-11eb-90e2-3f5c30c4275d.png">
 
-Cette fois-ci, nous obtenons un apprentissage satisfaisant. Pour un learning rate de 0.01 et 100 époques, nous traçons également l'erreur sur le jeu de données de validation : 
+Cette fois-ci, nous obtenons un apprentissage satisfaisant. Pour un learning rate de 0.0001 et 100 époques, nous traçons également l'erreur sur le jeu de données de validation : 
 
 <img width="468" alt="Capture d’écran 2020-12-13 à 17 27 41" src="https://user-images.githubusercontent.com/47599816/102017672-99bb1580-3d68-11eb-99c3-8c1b894d3950.png">
+
+Si on souhaite augmenter le nombre d'époques, par exemple à 1000 on obtient les résultats suivants : 
+
+<img width="523" alt="Capture d’écran 2020-12-13 à 17 34 46" src="https://user-images.githubusercontent.com/47599816/102017830-82305c80-3d69-11eb-9090-70abd091ad87.png">
+
+qui augmentent le temps de calcul mais ne sont pas significativement meilleur. 
+
 
 
