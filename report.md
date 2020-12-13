@@ -132,58 +132,64 @@ Par exemple, pour cette instance, on peut voir que notre modèle n'est pas du to
 Nous allons donc tester un autre modèle de deep learning. 
 
 # Partie 3 : Une autre modèle : le LSTM
-Hyper param
-Train_window : 60
-Fut_pred : 60
-Lr = 0.0005
-Epochs = 250
-Test_size = data_size / 2.5
-Hidden_layer_size = 25
+
+**Hyper parameters **
+
+Train_window : 60 \
+Fut_pred : 60 \
+Lr = 0.0005 \
+Epochs = 250 \
+Test_size = data_size / 2.5 \
+Hidden_layer_size = 25 
  
  ![image](https://user-images.githubusercontent.com/47599816/102024023-9c7d3100-3d8f-11eb-83f5-131dfd964d7e.png)
  ![image](https://user-images.githubusercontent.com/47599816/102024043-c46c9480-3d8f-11eb-922e-d33c528bc1ec.png)
 
-Hyper param
-Train_window : 60
-Fut_pred : 60
-Lr = 0.001
-Epochs = 150
-Test_size = data_size / 2.5
-Hidden_layer_size = 25
+**Hyper parameters **
+
+Train_window : 60 \
+Fut_pred : 60 \
+Lr = 0.001 \
+Epochs = 150 \
+Test_size = data_size / 2.5 \
+Hidden_layer_size = 25 
  
  ![image](https://user-images.githubusercontent.com/47599816/102024051-d1898380-3d8f-11eb-85ee-9c9b3d413476.png)
 ![image](https://user-images.githubusercontent.com/47599816/102024056-d3ebdd80-3d8f-11eb-9c92-ca1c247f9648.png)
  
-Hyper param
-Train_window : 60
-Fut_pred : 60
-Lr = 0.0005
-Epochs = 250
-Test_size = data_size / 2.5
-Hidden_layer_size = 50
+**Hyper parameters **
+
+Train_window : 60 \
+Fut_pred : 60 \
+Lr = 0.0005 \
+Epochs = 250 \
+Test_size = data_size / 2.5 \
+Hidden_layer_size = 50 
 
 ![image](https://user-images.githubusercontent.com/47599816/102024062-e49c5380-3d8f-11eb-90a5-9565fec6ce21.png)
 ![image](https://user-images.githubusercontent.com/47599816/102024063-e6fead80-3d8f-11eb-8784-3808198c0be2.png)
 
  
-Hyper param
-Train_window : 60
-Fut_pred : 60
-Lr = 0.0005
-Epochs = 100
-Test_size = data_size / 2.5
-Hidden_layer_size = 50
+**Hyper parameters **
+
+Train_window : 60 \
+Fut_pred : 60 \
+Lr = 0.0005 \ 
+Epochs = 100 \
+Test_size = data_size / 2.5 \
+Hidden_layer_size = 50 
 
 ![image](https://user-images.githubusercontent.com/47599816/102024070-f41b9c80-3d8f-11eb-95ad-a03dfee38cd6.png)
 ![image](https://user-images.githubusercontent.com/47599816/102024072-f67df680-3d8f-11eb-8468-f657253983ca.png)
  
- 
-Hyper param
-Train_window : 60
-Fut_pred : 60
-Lr = 0.0001
-Epochs = 500
-Test_size = data_size / 2.5
+ 
+**Hyper parameters **
+
+Train_window : 60 \
+Fut_pred : 60 \
+Lr = 0.0001 \
+Epochs = 500 \
+Test_size = data_size / 2.5 \
 Hidden_layer_size = 50
  
 ![image](https://user-images.githubusercontent.com/47599816/102024075-009ff500-3d90-11eb-850d-9801d9784f56.png)
