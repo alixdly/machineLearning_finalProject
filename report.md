@@ -37,8 +37,8 @@ De plus, voici un tableau qui résume les données :
 
 # Partie 2 : Un premier modèle : Convolutional Neural Network (CNN)
 
-### Explications
-Dans cette partie, nous avons décidé tout d'abord de nous intéresser à la donnée de traffic tous les quarts d'heure pour un emplacement et une direction et de construire un CNN capable de prédire correctement le traffic futur. 
+## Explications
+Dans cette partie, nous avons décidé tout d'abord de nous intéresser à la donnée de traffic jour par jour pour un emplacement et une direction et de construire un CNN capable de prédire correctement le traffic futur. 
 
 Nous préparons trois sets de données : 
 - train_set : le set de données qui va servir à l'entrainement des paramètres du modèle 
@@ -48,7 +48,7 @@ Nous préparons trois sets de données :
 Emplacement : ' CAPITAL OF TEXAS HWY / LAKEWOOD DR' 
 <img width="595" alt="Capture d’écran 2020-12-13 à 16 16 06" src="https://user-images.githubusercontent.com/47599816/102015924-9458cd80-3d5e-11eb-8a69-66c24228e390.png">
 
-Direction : North Bound
+Direction : South Bound
 
 Train_set : de septembre 2017 à septembre 2018 \
 Valid_set : de octobre 2018 à décembre 2018 \ 
@@ -57,14 +57,14 @@ Test_set : Janvier 2019
 Pour utiliser un modèle CNN pour prédire des données à 1 dimension, nous procédons de la manière suivante : \
 Nous séparons nos données en des sous-séquences de taille 3 (input) auxquelles nous associons une séquence de taille 1 (ouptput). Notre modèle doit apprendre à prédire l'output en fonction de l'input. Nous allons essayer plusieurs architectures de CNN et d'hyperparamètres sur nos données. 
 
-### CNN
+## CNN
 Notre CNN, le plus simple possible, est construit de la manière suivante : 
 
 1 couche de convolution \
 1 couche d'activation non linéaire \
 1 'fully connected' layer 
 
-*Résultats :* 
+**Résultats : **
 
 *lr=0.1, epochs=100*
 
@@ -102,4 +102,31 @@ Enfin, si on applique notre modèle entrainé aux données du mois de janvier 20
 
 <img width="668" alt="Capture d’écran 2020-12-13 à 17 47 52" src="https://user-images.githubusercontent.com/47599816/102018181-e05e3f00-3d6b-11eb-87af-97720e6add88.png">
 
-Notre modèle semble assez performant pour capter la tendance générale du traffic. Cependant, il est un peu en retard sur le pic de la 5ème date, et il fluctue beaucoup quand la courbe réelle est assez "lisse". Nous pouvons donc tester d'autres modèles qui seront meilleurs pour prédire le traffic futur.
+Notre modèle semble assez performant pour capter la tendance générale du traffic. Cependant, il est un peu "en retard" sur le pic de la 5ème date, et de manière générale. Il fluctue beaucoup quand la courbe réelle est assez "lisse". Nous pouvons donc tester d'autres modèles qui seront meilleurs pour prédire le traffic futur.
+
+## Résultats du CNN sur d'autres couples (emplacement,direction)
+
+Pour information, voici les résultats obtenus par notre modèle sur d'autres couples (emplacement, direction), avec les mêmes valeurs de learning rate et epochs : (0.01 et 100)
+
+Emplacement : ' CAPITAL OF TEXAS HWY / LAKEWOOD DR', Direction : North Bound 
+
+<img width="500" alt="Capture d’écran 2020-12-13 à 18 10 10" src="https://user-images.githubusercontent.com/47599816/102018621-a0e52200-3d6e-11eb-9c65-8d958998aa37.png">
+
+<img width="683" alt="Capture d’écran 2020-12-13 à 18 10 17" src="https://user-images.githubusercontent.com/47599816/102018623-a3477c00-3d6e-11eb-9a08-668056c897d6.png">
+
+
+Emplacement : '1612 BLK S LAMAR BLVD (Collier)' ,Direction : North Bound
+
+<img width="480" alt="Capture d’écran 2020-12-13 à 18 14 56" src="https://user-images.githubusercontent.com/47599816/102018705-354f8480-3d6f-11eb-9e12-41b738bade4c.png">
+
+<img width="672" alt="Capture d’écran 2020-12-13 à 18 15 03" src="https://user-images.githubusercontent.com/47599816/102018708-37b1de80-3d6f-11eb-8bf8-c3306d536d6d.png">
+
+Emplacement : '400 BLK AZIE MORTON RD (South of Barton Springs Rd)' ,Direction : South Bound
+
+<img width="482" alt="Capture d’écran 2020-12-13 à 18 19 59" src="https://user-images.githubusercontent.com/47599816/102018803-d6d6d600-3d6f-11eb-986c-e4a002f51643.png">
+
+<img width="668" alt="Capture d’écran 2020-12-13 à 18 20 04" src="https://user-images.githubusercontent.com/47599816/102018804-d8080300-3d6f-11eb-9e20-7c86492901c7.png">
+
+Par exemple, pour cette instance, on peut voir que notre modèle n'est pas du tout performant puisqu'il prévoit le pic de traffic bas du 5ème jour trop tard, mais aussi un deuxième pic inexistant 2 jours après. 
+
+Nous allons donc tester un autre modèle de deep learning. 
