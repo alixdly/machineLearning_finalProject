@@ -56,14 +56,35 @@ Notre CNN, le plus simple possible, est construit de la manière suivante :
 
 1 couche de convolution \
 1 couche d'activation non linéaire \
-1 'fully connected' layer \
+1 'fully connected' layer 
 
-Résultats : \
+*Résultats :* 
 
-lr=0.1, epochs=100
+*lr=0.1, epochs=100*
 
-lr=0.01, epochs = 100
+<img width="488" alt="Capture d’écran 2020-12-13 à 17 07 46" src="https://user-images.githubusercontent.com/47599816/102017229-db968c80-3d65-11eb-841e-0aed08227c74.png">
+
+Notre modèle n'apprend pas. Nous allons donc diviser le learning rate par un facteur 10. 
+
+*lr=0.01, epochs = 100* 
+
+<img width="488" alt="Capture d’écran 2020-12-13 à 17 10 08" src="https://user-images.githubusercontent.com/47599816/102017268-2adcbd00-3d66-11eb-98cd-1dd879f3307d.png">
+
+On obtient un meilleur résultat. Nous allons essayer avec d'encore meilleurs learning rates, pour voir si nous obtenons de meilleurs résultats. 
 
 lr = 0.001, epochs=100
 
+<img width="482" alt="Capture d’écran 2020-12-13 à 17 15 09" src="https://user-images.githubusercontent.com/47599816/102017371-ea317380-3d66-11eb-8c07-312b4b54cf37.png">
+
+On peut voir que le training loss remonte avant de recommencer à descendre, ce qui n'est pas satisfaisant.
+
+lr = 0.0001, epochs=100
+
+<img width="497" alt="Capture d’écran 2020-12-13 à 17 16 09" src="https://user-images.githubusercontent.com/47599816/102017372-eb62a080-3d66-11eb-90e2-3f5c30c4275d.png">
+
+Cette fois-ci, nous obtenons un apprentissage satisfaisant mais on voit bien que l'apprentissage n'est pas "lisse" : on a une cassure dans la courbe, et on n'obtient pas un résultats significativement meilleur qu'avec un learning rate de 0.01.
+
+Pour un learning rate de 0.01 et 100 époques, nous traçons également l'erreur sur le jeu de données de validation : 
+
+<img width="474" alt="Capture d’écran 2020-12-13 à 17 21 17" src="https://user-images.githubusercontent.com/47599816/102017510-bc006380-3d67-11eb-9d9c-dfb143132517.png">
 
