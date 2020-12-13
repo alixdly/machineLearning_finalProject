@@ -22,8 +22,6 @@ data.info()
 data.describe().T #4 603 861 lignes dans nos données
 data.isnull().sum()#pas de trous dans les données
 
-D = data.loc[rd.choices(data.index, k = 1000)]#jeu d'exemple
-
 """Une première version naive va être de prédire de manière indépendante
 le volume de traffic à un endroit donné en considérant que le traffic à un endroit
 est indépendant du traffic qui peut exister ailleurs (ce qui est bien sur faux).
@@ -32,8 +30,8 @@ Par exemple, on va essayer de prédire le traffic au point :
 et pour les quatres directions possibles.
 """
 
-D2 = data.loc[data.location_name == '1612 BLK S LAMAR BLVD (Collier)']
-Dvisual = D2.loc[rd.choices(D2.index, k = 100)]#on isole juste 100 lignes pour la visualisation des données
+LOCATION_NAME = '1612 BLK S LAMAR BLVD (Collier)'
+D2 = data.loc[data.location_name == LOCATION_NAME]
 
 #on continue notre approche naive ici en considérant indépendament les deux directions
 Dnord = D2.loc[D2.Direction == 'NB']
@@ -47,11 +45,8 @@ Dsud =Dsud[['Year', 'Month', 'Day', 'Volume']]
 Dnord = Dnord.groupby(['Year', 'Month', 'Day'], as_index = False).sum()
 Dsud = Dsud.groupby(['Year', 'Month', 'Day'], as_index = False).sum()
 
-#on peut maintenant visualiser la série temporelle sur laquelle on va réaliser une prédiction grâce à un RNN
-#plt.plot(Dnord.Volume)
-#plt.plot(Dsud.Volume)
-
 all_data = Dnord.Volume.values
+#all_data = Dsud.Volume.values
 
 """
 On dipose maintenant des donénes au bon format
@@ -59,9 +54,7 @@ Nous allons à présent séparer notre jeu de donénes en un jeu de d'apprentiss
 et un jeu de test.
 """
 
-
-
-test_data_size = int(len(all_data) /3)
+test_data_size = int(len(all_data) /2.5)
 
 train_data = all_data[:-test_data_size]
 test_data = all_data[-test_data_size:]
@@ -93,7 +86,7 @@ train_inout_seq = create_inout_sequences(train_data, train_window)
 test_inout_seq = create_inout_sequences(train_data, train_window)
 
 class LSTM(nn.Module):
-    def __init__(self, input_size=1, hidden_layer_size=25, output_size=1):
+    def __init__(self, input_size=1, hidden_layer_size=50, output_size=1):
         super().__init__()
         self.hidden_layer_size = hidden_layer_size
 
@@ -150,9 +143,9 @@ def Valid():
     
 model = LSTM()
 loss_function = nn.MSELoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
-epochs = 150 
+epochs = 500
 train_losses = []
 valid_losses = []
 
@@ -181,11 +174,20 @@ print(actual_predictions)
 #x = np.arange(len(Dnord.Volume)-train_window, len(Dnord.Volume), 1)
 x = np.arange(len(Dnord.Volume), len(Dnord.Volume)+fut_pred, 1)
 
-plt.plot(all_data)
-plt.plot(x, actual_predictions)
+plt.plot(all_data, label  = "Passed traffic")
+plt.plot(x, actual_predictions, label = "Predicted Traffic")
+plt.title("Prediction du traffic pour les deux prochains mois")
+plt.xlabel(LOCATION_NAME + ", Direction Nord")
+plt.legend()
+
 
 plt.figure()
-plt.plot(train_losses)
+plt.plot(train_losses, label = "trainning loss")
+plt.plot(valid_losses, label = "validation los")
+plt.title("Trainning and Validation loss during learning time")
+plt.xlabel("Loss computed with Mean Square Error")
+plt.legend()
+
  
 
 
