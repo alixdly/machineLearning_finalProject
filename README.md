@@ -2,6 +2,6 @@
 Data can be found at : https://www.kaggle.com/vinayshanbhag/radar-traffic-data
 
 # Files 
-Rapport.md -> Rapport \
+report.md -> Rapport \
 finalProject -> Import and inspect data \
-RNN, CNN, LSTM -> Different models tried
+CNN, LSTM -> Different models tried
