@@ -78,7 +78,7 @@ print(len(train_data))
 print(len(test_data))
 
 
-train_window = 30
+train_window = 60
 
 def create_inout_sequences(input_data, tw):
     inout_seq = []
@@ -93,7 +93,7 @@ train_inout_seq = create_inout_sequences(train_data, train_window)
 test_inout_seq = create_inout_sequences(train_data, train_window)
 
 class LSTM(nn.Module):
-    def __init__(self, input_size=1, hidden_layer_size=10, output_size=1):
+    def __init__(self, input_size=1, hidden_layer_size=25, output_size=1):
         super().__init__()
         self.hidden_layer_size = hidden_layer_size
 
@@ -152,7 +152,7 @@ model = LSTM()
 loss_function = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-epochs = 250
+epochs = 150 
 train_losses = []
 valid_losses = []
 
@@ -160,9 +160,9 @@ for i in range(epochs):
     Train()
     Valid()
 
-fut_pred = 30
+fut_pred = 60
 
-test_inputs = train_data[-train_window:].tolist()
+test_inputs = test_data[-train_window:].tolist()
 print(test_inputs)
 
 model.eval()
@@ -173,13 +173,14 @@ for i in range(fut_pred):
         model.hidden = (torch.zeros(1, 1, model.hidden_layer_size),
                         torch.zeros(1, 1, model.hidden_layer_size))
         test_inputs.append(model(seq).item())
-        
-print(test_inputs[fut_pred:])
 
 actual_predictions = scaler.inverse_transform(np.array(test_inputs[train_window:] ).reshape(-1, 1))
-print(actual_predictions)
+#actual_predictions = scaler.inverse_transform(np.array(test_inputs[-fut_pred:] ).reshape(-1, 1))
 
-x = np.arange(len(Dnord.Volume)-train_window, len(Dnord.Volume), 1)
+print(actual_predictions)
+#x = np.arange(len(Dnord.Volume)-train_window, len(Dnord.Volume), 1)
+x = np.arange(len(Dnord.Volume), len(Dnord.Volume)+fut_pred, 1)
+
 plt.plot(all_data)
 plt.plot(x, actual_predictions)
 
