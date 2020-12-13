@@ -44,6 +44,7 @@ Nous préparons trois sets de données :
 - valid_set : le set de validation, aussi appelé set de développement, qui va servir à évaluer les hyperparamètres du modèle
 - test_set : le set sur lequel on va tester notre modèle
 
+Emplacement : ' CAPITAL OF TEXAS HWY / LAKEWOOD DR' 
 Ici
 
 
