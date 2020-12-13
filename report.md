@@ -37,6 +37,14 @@ De plus, voici un tableau qui résume les données :
 
 # Partie 2 : Un premier modèle : Convolutional Neural Network (CNN)
 
+Dans cette partie, nous avons décidé tout d'abord de nous intéresser à la donnée de traffic tous les quarts d'heure pour un emplacement et une direction et de construire un CNN capable de prédire correctement le traffic futur. 
+
+Nous préparons trois sets de données : 
+- train_set : le set de données qui va servir à l'entrainement des paramètres du modèle 
+- valid_set : le set de validation, aussi appelé set de développement, qui va servir à évaluer les hyperparamètres du modèle
+- test_set : le set sur lequel on va tester notre modèle
+
+Ici
 
 
 
