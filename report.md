@@ -49,10 +49,21 @@ Emplacement : ' CAPITAL OF TEXAS HWY / LAKEWOOD DR'
 
 Direction : North Bound
 
-Train_set : de septembre 2017 à septembre 2018
-Valid_set : de octobre 2018 à décembre 2018
+Train_set : de septembre 2017 à septembre 2018 \
+Valid_set : de octobre 2018 à décembre 2018 \ 
 
-Résultat : 
+Notre CNN, le plus simple possible, est construit de la manière suivante : 
 
+1 couche de convolution \
+1 couche d'activation non linéaire \
+1 'fully connected' layer \
+
+Résultats : \
+
+lr=0.1, epochs=100
+
+lr=0.01, epochs = 100
+
+lr = 0.001, epochs=100
 
 
