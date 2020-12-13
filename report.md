@@ -133,7 +133,7 @@ Nous allons donc tester un autre modèle de deep learning.
 
 # Partie 3 : Une autre modèle : le LSTM
 
-**Hyper parameters **
+**Hyper parameters**
 
 Train_window : 60 \
 Fut_pred : 60 \
@@ -145,7 +145,7 @@ Hidden_layer_size = 25
  ![image](https://user-images.githubusercontent.com/47599816/102024023-9c7d3100-3d8f-11eb-83f5-131dfd964d7e.png)
  ![image](https://user-images.githubusercontent.com/47599816/102024043-c46c9480-3d8f-11eb-922e-d33c528bc1ec.png)
 
-**Hyper parameters **
+**Hyper parameters**
 
 Train_window : 60 \
 Fut_pred : 60 \
@@ -157,7 +157,7 @@ Hidden_layer_size = 25 
  ![image](https://user-images.githubusercontent.com/47599816/102024051-d1898380-3d8f-11eb-85ee-9c9b3d413476.png)
 ![image](https://user-images.githubusercontent.com/47599816/102024056-d3ebdd80-3d8f-11eb-9c92-ca1c247f9648.png)
  
-**Hyper parameters **
+**Hyper parameters**
 
 Train_window : 60 \
 Fut_pred : 60 \
@@ -170,7 +170,7 @@ Hidden_layer_size = 50
 ![image](https://user-images.githubusercontent.com/47599816/102024063-e6fead80-3d8f-11eb-8784-3808198c0be2.png)
 
  
-**Hyper parameters **
+**Hyper parameters**
 
 Train_window : 60 \
 Fut_pred : 60 \
@@ -183,7 +183,7 @@ Hidden_layer_size = 50 
 ![image](https://user-images.githubusercontent.com/47599816/102024072-f67df680-3d8f-11eb-8468-f657253983ca.png)
  
  
-**Hyper parameters **
+**Hyper parameters**
 
 Train_window : 60 \
 Fut_pred : 60 \
