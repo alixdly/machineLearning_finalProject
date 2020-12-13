@@ -82,9 +82,8 @@ lr = 0.0001, epochs=100
 
 <img width="497" alt="Capture d’écran 2020-12-13 à 17 16 09" src="https://user-images.githubusercontent.com/47599816/102017372-eb62a080-3d66-11eb-90e2-3f5c30c4275d.png">
 
-Cette fois-ci, nous obtenons un apprentissage satisfaisant mais on voit bien que l'apprentissage n'est pas "lisse" : on a une cassure dans la courbe, et on n'obtient pas un résultats significativement meilleur qu'avec un learning rate de 0.01.
+Cette fois-ci, nous obtenons un apprentissage satisfaisant. Pour un learning rate de 0.01 et 100 époques, nous traçons également l'erreur sur le jeu de données de validation : 
 
-Pour un learning rate de 0.01 et 100 époques, nous traçons également l'erreur sur le jeu de données de validation : 
+<img width="468" alt="Capture d’écran 2020-12-13 à 17 27 41" src="https://user-images.githubusercontent.com/47599816/102017672-99bb1580-3d68-11eb-99c3-8c1b894d3950.png">
 
-<img width="474" alt="Capture d’écran 2020-12-13 à 17 21 17" src="https://user-images.githubusercontent.com/47599816/102017510-bc006380-3d67-11eb-9d9c-dfb143132517.png">
 
