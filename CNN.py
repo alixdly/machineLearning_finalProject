@@ -2,14 +2,19 @@
 import numpy as np
 import torch 
 import torch.nn as nn
+from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import Dataset,DataLoader
 from finalProject import DataReader
 
 
 #Importer les données
-data=DataReader('Radar_Traffic_Counts.csv',year=2018,location=' CAPITAL OF TEXAS HWY / LAKEWOOD DR',direction='NB')
-train_set = data[:'2018-03-01 00:00:00']
-valid_set = data['2018-03-01 00:00:00':'2018-03-10 00:00:00']
+data=DataReader('Radar_Traffic_Counts.csv',location=' CAPITAL OF TEXAS HWY / LAKEWOOD DR',direction='SB')
+traffic = np.array(data["Volume"])
+scaler = MinMaxScaler(feature_range=(0, 1))
+traffic_normalized = scaler.fit_transform(traffic.reshape(-1, 1))
+data["Volume"] = traffic_normalized
+train_set = data['2018-09-01 00:00:00':'2019-10-01 00:00:00']
+valid_set = data['2019-10-01 00:00:00':'2019-10-31 00:00:00']
 
 def split_sequence(sequence, n_steps):
     x, y = list(), list()
@@ -22,7 +27,7 @@ def split_sequence(sequence, n_steps):
         y.append(seq_y)
     return np.array(x), np.array(y)
 
-n_steps = 12
+n_steps = 4
 train_x,train_y = split_sequence(train_set.Volume.values,n_steps)
 valid_x,valid_y = split_sequence(valid_set.Volume.values,n_steps)
 
@@ -48,15 +53,15 @@ valid_loader = DataLoader(train,batch_size=3,shuffle=False)
 #CNN : Convolutional Neural Networl pour données à 1 dimension avec 2 couches de convolution 
 
 #Mon input évolue de la façon suivante :
-#Input - Size = 12, Channels = 1
+#Input - Size = 4, Channels = 1
 #First Layer
-#Conv1D - Size = 10, Channels = 6
+#Conv1D - Size = 4, Channels = 10
 #ReLU - Unchanged
-#MaxPool - Size = 6, Channels = 6
-#Second Layer
-#Conv1D - Size = 4, Channels = 12
-#ReLU - Unchanged
-#MaxPool - Size = 2, Channels = 6
+#MaxPool - Size = 2, Channels = 10
+##Second Layer
+##Conv1D - Size = 4, Channels = 12
+##ReLU - Unchanged
+##MaxPool - Size = 2, Channels = 6
 #Full Connection Layer - output= 1 node
     
 class CNN(nn.Module):
@@ -66,28 +71,28 @@ class CNN(nn.Module):
         super(CNN, self).__init__()
         #First convolutional layer
         self.layer1 = nn.Sequential(
-            nn.Conv1d(in_channels = 1, out_channels = 6, kernel_size = 3),#Convolution
+            nn.Conv1d(in_channels = 1, out_channels = 10, kernel_size = 1),#Convolution
             nn.ReLU(),#Activation non linéaire
             nn.MaxPool1d(kernel_size=2, stride=2) #Max Pooling layer
         )
         #Second convolutional layer
-        self.layer2 = nn.Sequential(
-            nn.Conv1d(in_channels = 6, out_channels = 12, kernel_size = 3), #Convolution 
-            nn.ReLU(), #Activation non linéaire
-            nn.MaxPool1d(kernel_size=2, stride=2) #Max Pooling
-        )
-        self.fc = nn.Linear(in_features=2*6, out_features=1) #Full connection layer
+        #self.layer2 = nn.Sequential(
+            #nn.Conv1d(in_channels = 6, out_channels = 12, kernel_size = 3), #Convolution 
+            #nn.ReLU(), #Activation non linéaire
+            #nn.MaxPool1d(kernel_size=2, stride=2) #Max Pooling
+        #)
+        self.fc = nn.Linear(in_features=2*10, out_features=1) #Full connection layer
         
     #Forward pass method
     def forward(self,x):
         out = self.layer1(x)
-        out = self.layer2(out)
+        #out = self.layer2(out)
         out = out.view(out.size(0), -1)
         out = self.fc(out)
         return out
     
 model=CNN()
-lr=0.001
+lr=1
 optimizer=torch.optim.Adam(model.parameters(),lr=lr)
 criterion=nn.MSELoss()
 
@@ -132,7 +137,7 @@ import matplotlib.pyplot as plt
 plt.plot(train_losses,label='train_loss')
 plt.plot(valid_losses,label='valid_loss')
 plt.title('MSE Loss')
-plt.ylim(0, 100)
+plt.ylim(0, 3)
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
 
 

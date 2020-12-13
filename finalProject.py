@@ -34,23 +34,11 @@ def summary(df):
 
 infos=summary(data)
 
-#Normaliser les données
-traffic_volumes=np.array(data["Volume"])
-scaler = MinMaxScaler(feature_range=(0, 1))
-traffic_volumes_normalized = scaler.fit_transform(traffic_volumes.reshape(-1, 1))
-data["Volume"] = traffic_volumes_normalized
-
-
 #Fonction pour ouvrir les données en séléctionnant ce qu'on veut
 def DataReader(csv,year=None,month=None, location=None, direction=None):
     #Ouvrir le csv et construire une colonne avec la date complète; Année+Mois+jour+TimeBin
-    data = pd.read_csv(csv, parse_dates={"date": [3, 4, 5, 9]}, keep_date_col=True)
+    data = pd.read_csv(csv, parse_dates={"date": [3, 4, 5]}, keep_date_col=True)
     data=data.astype({'Volume': 'float'})
-    #Normaliser
-    traffic_volumes=np.array(data["Volume"])
-    scaler = MinMaxScaler(feature_range=(0, 1))
-    traffic_volumes_normalized = scaler.fit_transform(traffic_volumes.reshape(-1, 1))
-    data["Volume"] = traffic_volumes_normalized
     #Select wanted year
     if year is not None:
         data = data.loc[data["Year"] == str(year)]
@@ -62,7 +50,8 @@ def DataReader(csv,year=None,month=None, location=None, direction=None):
         data = data.loc[data["location_name"] == location]
         data = data.loc[data["Direction"] == direction]
     data = data.groupby("date").agg({"Volume": "sum"}).sort_values("date").reset_index()
-    data = data.set_index('date')
+    data=data.set_index('date')
     return data
 
+data=DataReader('Radar_Traffic_Counts.csv',location=' CAPITAL OF TEXAS HWY / LAKEWOOD DR',direction='NB')
 
