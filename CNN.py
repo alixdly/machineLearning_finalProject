@@ -1,10 +1,9 @@
 #Librairies utiles
 import numpy as np
-import torch 
+import torch
 import torch.nn as nn
 from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import Dataset,DataLoader
-from finalProject import DataReader
 
 
 #Importer les données
@@ -13,8 +12,8 @@ traffic = np.array(data["Volume"])
 scaler = MinMaxScaler(feature_range=(0, 1))
 traffic_normalized = scaler.fit_transform(traffic.reshape(-1, 1))
 data["Volume"] = traffic_normalized
-train_set = data['2018-09-01 00:00:00':'2019-10-01 00:00:00']
-valid_set = data['2019-10-01 00:00:00':'2019-10-31 00:00:00']
+train_set = data[:'2018-09-30 00:00:00']
+valid_set = data['2018-10-01 00:00:00':'2018-12-30 00:00:00']
 
 def split_sequence(sequence, n_steps):
     x, y = list(), list()
