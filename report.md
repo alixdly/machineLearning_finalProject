@@ -101,3 +101,5 @@ qui augmentent le temps de calcul mais ne sont pas significativement meilleur.
 Enfin, si on applique notre modèle entrainé aux données du mois de janvier 2019, nous obtenons les résultats suivants : 
 
 <img width="668" alt="Capture d’écran 2020-12-13 à 17 47 52" src="https://user-images.githubusercontent.com/47599816/102018181-e05e3f00-3d6b-11eb-87af-97720e6add88.png">
+
+Notre modèle semble assez performant pour capter la tendance générale du traffic. Cependant, il est un peu en retard sur le pic de la 5ème date, et il fluctue beaucoup quand la courbe réelle est assez "lisse". Nous pouvons donc tester d'autres modèles qui seront meilleurs pour prédire le traffic futur.
