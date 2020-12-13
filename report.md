@@ -45,8 +45,14 @@ Nous préparons trois sets de données :
 - test_set : le set sur lequel on va tester notre modèle
 
 Emplacement : ' CAPITAL OF TEXAS HWY / LAKEWOOD DR' 
-Ici
+<img width="595" alt="Capture d’écran 2020-12-13 à 16 16 06" src="https://user-images.githubusercontent.com/47599816/102015924-9458cd80-3d5e-11eb-8a69-66c24228e390.png">
 
+Direction : North Bound
+
+Train_set : de septembre 2017 à septembre 2018
+Valid_set : de octobre 2018 à décembre 2018
+
+Résultat : 
 
 
 
