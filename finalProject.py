@@ -66,19 +66,3 @@ def DataReader(csv,year=None,month=None, location=None, direction=None):
     return data
 
 
-class RadarDataset(Dataset):
-    def __init__(self,feature,target):
-        self.feature = feature
-        self.target = target
-    
-    def __len__(self):
-        return len(self.feature)
-    
-    def __getitem__(self,idx):
-        item = self.feature[idx]
-        label = self.target[idx]
-        print(label.shape)
-        
-        return item,label
-
-

@@ -1,129 +1,142 @@
 #Implémentation de la correction du projet "Predict Future Sales"
 
 #Librairies utiles
-import pandas as pd
 import numpy as np
-from sklearn.preprocessing import MinMaxScaler
-
-#Chargement des données
-data=pd.read_csv('Radar_Traffic_Counts.csv')
-
-#Normaliser les données
-traffic_volumes=np.array(data["Volume"])
-scaler = MinMaxScaler(feature_range=(0, 1))
-traffic_volumes_normalized = scaler.fit_transform(traffic_volumes.reshape(-1, 1))
-data["Volume"] = traffic_volumes_normalized
-
-#On se concentre sur une localisation : CAPITAL OF TEXAS HWY / LAKEWOOD DR
-data = data.loc[data.location_name == ' CAPITAL OF TEXAS HWY / LAKEWOOD DR']
-data = data.loc[data.Direction == 'NB']
-data = data.loc[data.Year==2019]
-data.to_csv('Traffic_CapitalOfTexasHWY.csv', index=False, encoding='utf-8')
-
-dsi2c = {}
-lastday=-1
-#on ouvre le fichier et on récupère les infos qui nous intéresse
-with open("Traffic_CapitalOfTexasHWY.csv","r") as f:
-    for l in f: break
-    for l in f:
-        c=l.split(",")
-        print(c)
-        day = int(c[1])
-        if date>lastmonth: lastmonth=date
-        shop = int(c[2])
-        item = int(c[3])
-        count = float(c[-1])
-        key = (shop,item)
-        seq = dsi2c[key] if key in dsi2c else []
-        seq += [(date,count)]
-        dsi2c[key] = seq
-print("nsequences %d %d" % (len(dsi2c.keys()),lastmonth))
-
-
-import torch
+import torch 
 import torch.nn as nn
-from random import shuffle
+from torch.utils.data import Dataset,DataLoader
+from finalProject import DataReader
 
-xmin, xmax = 100.0, -100.0
-vnorm = 1000.0
-minlen = 8
-# if <8 then layer1 outputs L=7/2=3 which fails because layer2 needs L>=4
-si2X, si2Y = {}, {}
-dsi2X, dsi2Y = {}, {}
-for s,i in dsi2c.keys():
-    seq = dsi2c[(s,i)]
-    if len(seq)<=minlen: continue #passer à l'itération suivante, ne pas prendre en compte ce couple 
-    xlist, ylist = [], []
-    for m in range(minlen, len(seq)-1):
-        xx = [seq[z][1]/vnorm for z in range(m)]
-        if max(xx)>xmax: xmax=max(xx)
-        if min(xx)<xmin: xmin=min(xx)
-        xlist.append(torch.tensor(xx,dtype=torch.float32))
-        yy = [seq[m+1][1]/vnorm]
-        ylist.append(torch.tensor(yy,dtype=torch.float32))
-    si2X[(s,i)] = xlist
-    si2Y[(s,i)] = ylist
-    if True: # build evaluation dataset
-        xx = [seq[z][1]/vnorm for z in range(len(seq)-1)]
-        dsi2X[(s,i)] = [torch.tensor(xx,dtype=torch.float32)]
-        yy = [seq[len(seq)-1][1]/vnorm]
-        dsi2Y[(s,i)] = [torch.tensor(yy,dtype=torch.float32)]
+data=DataReader('Radar_Traffic_Counts.csv',year=2018, month=2,location=' CAPITAL OF TEXAS HWY / LAKEWOOD DR',direction='NB')
+train_set = data[:'2018-02-07 00:00:00']
+valid_set = data['2018-02-07 00:00:00':'2018-02-08 00:00:00']
 
-print("ntrain %d %f %f" % (len(si2X),xmin,xmax))
+def split_sequence(sequence, n_steps):
+    x, y = list(), list()
+    for i in range(len(sequence)):
+        
+        end_ix = i + n_steps
+        
+        if end_ix > len(sequence)-1:
+            break
+        seq_x, seq_y = sequence[i:end_ix], sequence[end_ix]
+        x.append(seq_x)
+        y.append(seq_y)
+    return np.array(x), np.array(y)
 
-class TimeCNN(nn.Module):
+n_steps = 3
+train_x,train_y = split_sequence(train_set.Volume.values,n_steps)
+valid_x,valid_y = split_sequence(valid_set.Volume.values,n_steps)
+
+class RadarDataset(Dataset):
+    def __init__(self,feature,target):
+        self.feature = feature
+        self.target = target
+    
+    def __len__(self):
+        return len(self.feature)
+    
+    def __getitem__(self,idx):
+        item = self.feature[idx]
+        label = self.target[idx]
+        print(label.shape)
+        
+        return item,label
+
+class CNN(nn.Module):
     def __init__(self):
-        super(TimeCNN, self).__init__()
-        self.layer1 = nn.Sequential(
-            nn.Conv1d(in_channels=1, out_channels=32, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.MaxPool1d(kernel_size=2, stride=2)
-        )
-        self.layer2 = nn.Sequential(
-            nn.Conv1d(in_channels=32, out_channels=64, kernel_size=3),
-            nn.ReLU(),
-            nn.AdaptiveMaxPool1d(8)
-        )
-        self.fc1 = nn.Linear(in_features=64*8, out_features=128)
-        self.drop = nn.Dropout2d(0.25)
-        self.fc2 = nn.Linear(in_features=128, out_features=32)
-        self.fc3 = nn.Linear(in_features=32, out_features=1)
- 
-    def forward(self, x):
-        out = self.layer1(x)
-        out = self.layer2(out)
-        out = out.view(out.size(0), -1)
-        out = self.fc1(out)
-        out = self.drop(out)
-        out = self.fc2(out)
-        out = self.fc3(out)
-        return out
+        super(CNN,self).__init__()
+        self.conv1d = nn.Conv1d(3,64,kernel_size=1)
+        self.relu = nn.ReLU(inplace=True)
+        self.fc1 = nn.Linear(64*2,50)
+        self.fc2 = nn.Linear(50,1)
+        
+    def forward(self,x):
+        x = self.conv1d(x)
+        x = self.relu(x)
+        x = x.view(-1)
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.fc2(x)
+        
+        return x
+    
+model=CNN()
+lr=0.01
+optimizer=torch.optim.Adam(model.parameters(),lr=lr)
+criterion=nn.MSELoss()
+
+train = RadarDataset(train_x.reshape(train_x.shape[0],train_x.shape[1],1),train_y)
+valid = RadarDataset(valid_x.reshape(valid_x.shape[0],valid_x.shape[1],1),valid_y)
+train_loader = DataLoader(train,batch_size=2,shuffle=False)
+valid_loader = DataLoader(train,batch_size=2,shuffle=False)
+
+train_losses = []
+valid_losses = []
+
+def Train():
+    
+    running_loss = .0
+    model.train()
+    
+    for idx, (inputs,labels) in enumerate(train_loader):
+        optimizer.zero_grad()
+        preds = model(inputs.float())
+        loss = criterion(preds,labels)
+        loss.backward()
+        optimizer.step()
+        running_loss += loss   
+        
+    train_loss = running_loss/len(train_loader)
+    train_losses.append(train_loss.detach().numpy())
+    
+    print(f'train_loss {train_loss}')
+    
+def Valid():
+    
+    running_loss = .0
+    model.eval()
+    
+    with torch.no_grad():
+        for idx, (inputs, labels) in enumerate(valid_loader):
+            optimizer.zero_grad()
+            preds = model(inputs.float())
+            loss = criterion(preds,labels)
+            running_loss += loss
+            
+        valid_loss = running_loss/len(valid_loader)
+        valid_losses.append(valid_loss.detach().numpy())
+        print(f'valid_loss {valid_loss}')
+        
+epochs = 200
+for epoch in range(epochs):
+    print('epochs {}/{}'.format(epoch+1,epochs))
+    Train()
+    Valid()
+
+import matplotlib.pyplot as plt
+plt.plot(train_losses,label='train_loss')
+plt.plot(valid_losses,label='valid_loss')
+plt.title('MSE Loss')
+plt.ylim(0, 100)
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
 
 
-mod = TimeCNN()
-loss = torch.nn.MSELoss()
-opt = torch.optim.Adam(mod.parameters(),lr=0.01)
-for s, i in si2X.keys():
-    xlist = si2X[(s,i)]
-    if len(xlist)<10: continue
-    ylist = si2Y[(s,i)]
-    idxtr = list(range(len(xlist)))
-    for ep in range(5):
-        shuffle(idxtr)
-        lotot=0.
-        mod.train()
-        for j in idxtr:
-            opt.zero_grad()
-            haty = mod(xlist[j].view(1,1,-1))
-            # print("pred %f" % (haty.item()*vnorm))
-            lo = loss(haty,ylist[j].view(1,-1))
-            lotot += lo.item()
-            lo.backward()
-            opt.step()
+target_x , target_y = split_sequence(train_set.Volume.values,n_steps)
+inputs = target_x.reshape(target_x.shape[0],target_x.shape[1],1)
 
-        # the MSE here is computed on a single sample: so it's highly variable !
-        # to make sense of it, you should average it over at least 1000 (s,i) points
-        mod.eval()
-        haty = mod(dsi2X[(s,i)][0].view(1,1,-1))
-        lo = loss(haty,dsi2Y[(s,i)][0].view(1,-1))
-        print("epoch %d loss %1.9f testMSE %1.9f" % (ep, lotot, lo.item()))
+model.eval()
+prediction = []
+batch_size = 2
+iterations =  int(inputs.shape[0]/2)
+
+for i in range(iterations):
+    preds = model(torch.tensor(inputs[batch_size*i:batch_size*(i+1)]).float())
+    prediction.append(preds.detach().numpy())
+    
+fig, ax = plt.subplots(1, 2,figsize=(11,4))
+ax[0].set_title('predicted one')
+ax[0].plot(prediction)
+ax[1].set_title('real one')
+ax[1].plot(target_y)
+plt.show()
