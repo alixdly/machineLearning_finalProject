@@ -275,7 +275,7 @@ Un dernier essai a été fait avec un nombre d'epochs au maximum des capacités 
 
 On pourrait conclure après les trois derniers essais qu'augmenter le nombre de couches cachées amène à une prédiction plus lisse par rapport aux oscillations observées sur les données réelles.
 
-## Articles Utilisés pour les codes python
+### Articles Utilisés pour les codes python
 
 https://stackabuse.com/time-series-prediction-using-lstm-with-pytorch-in-python/
 
