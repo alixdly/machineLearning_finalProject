@@ -138,9 +138,6 @@ Nous allons donc tester un autre modèle de deep learning.
 
 ## Explications : 
 
-TODO : Pourquoi nous avons choisi un LSTM ? Quel est le fonctionnement rapide d'un LSTM? à quelles données nous sommmes nous intéréssés (par jour, heure...?)? comment avons nous séparé les données pour l'apprentissage ? Quel location/direction avons nous choisi ?
-+ajouter liens des articles/aides utilisées
-
 On remarque dans la littérature aujourd'hui que les réseaux de neurones récurrents à mémoire court-et-long terme (LSTM) sont particulièrement adaptés pour réaliser des prédictions futures à partir de séries temporelles. En effet les réseaux de neurones réccurents sont par définition efficaces pour réaliser des prédiction de séries temporelles car ils prennent en compte le passer pour prédire le futur. Le problème qui se pose advient lors de la rétropogagation de l'erreur, qui à cause de valeur de gradient trop faibles, à du mal à impacter les décisions sur les entrées les plus anciennes, on appelle cela le problème du gradient evenscent. Le LSTM, par le biais d'une architecture de cellule différente, entend régler ce problème et donc promet une meilleure prise en compte des évenements anciens.
 
 Dans un RNN, on retrouve un architecture semblable à celle d'un réseau de neurone "classique" sauf que les neurones "bouclent" sur eux-même ce revient à chaque étape à considérer une entrée supplémentaire qui est l'état propre du neurone d'où le caractère réccurent du réseau.
@@ -162,6 +159,20 @@ Il nous faut aussi définir lors de chaque essai la valeur du taux d'apprentisag
 
 TO DO : détailler ce qui est bien et pas bon, ce qu'on tente pour améliorer 
 
+Les différents essais de prédiction sont détaillés ici avec les hyper-paramètres utilisés. On commentera les courbes d'erreurs obtenus.
+
+**Hyper parameters**
+Train_window : 60 \
+Fut_pred : 60 \
+Lr = 0.0001 \
+Epochs = 250 \
+Test_size = data_size / 5 \
+Hidden_layer_size = 25
+
+![image2](https://user-images.githubusercontent.com/74898266/102111829-26cca000-3e37-11eb-9605-1d85c5754203.png)
+![image3](https://user-images.githubusercontent.com/74898266/102111856-32b86200-3e37-11eb-85a2-d214a72fea90.png)
+
+
 **Hyper parameters**
 
 Train_window : 60 \
@@ -175,6 +186,8 @@ Hidden_layer_size = 25
 
 
 ![Sans titre2](https://user-images.githubusercontent.com/47599816/102079236-95483880-3e0c-11eb-87fa-28936aa1dd52.png)
+
+Si la prédiction otenue semble suivre des tendances, l'erreur lors de l'apprentissage et de la validation n'est pas celle attendue avec de forte oscillations observées à partir du 150ème epoch.
 
 
 **Hyper parameters**
