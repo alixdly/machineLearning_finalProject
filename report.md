@@ -151,11 +151,12 @@ Au sein du neurone LSTM, on va retrouver 3 portes (la Porte d'oubli, la Porte d'
 
 ## Démarche suivie
 
-Nous nous proposons de contruire un modèle LSTM permettant à partir de l'historique du traffic en un lieu et une direction, de prédire les deux prochains mois de circulation. Le modèle construit doit être fonctionnel pour n'importe quel lieu et quelle direction. Nous séparons la série temporelle en un jeu d'apprentissage et un jeu de validation avec un rapport de taile que nous nous autoriserons à faire varier.
+Nous nous proposons de contruire un modèle LSTM permettant à partir de l'historique du traffic en un lieu et une direction, de prédire les deux prochains mois de circulation. Le modèle construit doit être fonctionnel pour n'importe quel lieu et quelle direction. Nous séparons la série temporelle en un jeu d'apprentissage et un jeu de validation avec un rapport de taile que nous nous autoriserons à faire varier. Pour pouvoir traiter les données de manière "relativement" rapide, nous agglomérons les mesures à la journée, les prédictions seront donc également des prédictions journalières.
 
 ## LSTM : 
 
-Description des paramètres du modèle
+Notre modèle se compose d'une couche LSTM à laquelle il faut définir un état initial et le nombre de couches cachées suivie d'une couche fully connected. A chaque epoch, un aprrentissage est réalisé sur le jeu d'apprentissage (plus ancien) avec rétropopagation de l'erreur suivi d'une validation sur le jeu de validation avec à nouveau une rétropopagation de l'erreur. Ces deux courbes seront superposées lors de la présentation des résultats.
+Il nous faut aussi définir lors de chaque essai la valeur du taux d'apprentisage (learning rate - lr) et le nombre d'epochs à réaliser.
 
 ## Résultats 
 
