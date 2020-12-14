@@ -202,10 +202,11 @@ Hidden_layer_size = 25
  
 ![Sans titre](https://user-images.githubusercontent.com/47599816/102079232-937e7500-3e0c-11eb-87bc-5c2fa6cd853f.png)
 
-
 ![Sans titre2](https://user-images.githubusercontent.com/47599816/102079236-95483880-3e0c-11eb-87fa-28936aa1dd52.png)
 
-Si la prédiction otenue semble suivre des tendances, l'erreur lors de l'apprentissage et de la validation n'est pas celle attendue avec de forte oscillations observées à partir du 150ème epoch.
+Si la prédiction otenue semble suivre des tendances, l'erreur lors de l'apprentissage et de la validation n'est pas celle attendue avec, là encore, de fortes oscillations observées à partir du 150ème epoch.
+
+Nous essayons de réduire le nombre d'epochs à 150.
 
 
 **Hyper parameters**
@@ -220,6 +221,8 @@ Hidden_layer_size = 25 
 ![Sans titre3](https://user-images.githubusercontent.com/47599816/102079382-e48e6900-3e0c-11eb-8dff-9279c8c57c03.png)
  
 ![Sans titre4](https://user-images.githubusercontent.com/47599816/102079394-e9ebb380-3e0c-11eb-8d56-5a77ce6aa9ad.png)
+
+La démarche n'a pas forcément eu l'effet escompté et l'on retrouve ces sauts irréguliers mais avec une tendance sur les prédictions obtenues qui semble extremement réaliste par rapport à la série de départ.
 
 
 **Hyper parameters**
