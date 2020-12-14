@@ -162,16 +162,34 @@ TO DO : détailler ce qui est bien et pas bon, ce qu'on tente pour améliorer
 Les différents essais de prédiction sont détaillés ici avec les hyper-paramètres utilisés. On commentera les courbes d'erreurs obtenus.
 
 **Hyper parameters**
+
 Train_window : 60 \
 Fut_pred : 60 \
 Lr = 0.0001 \
-Epochs = 250 \
+Epochs = 150 \
 Test_size = data_size / 5 \
 Hidden_layer_size = 25
 
 ![image2](https://user-images.githubusercontent.com/74898266/102111829-26cca000-3e37-11eb-9605-1d85c5754203.png)
 ![image3](https://user-images.githubusercontent.com/74898266/102111856-32b86200-3e37-11eb-85a2-d214a72fea90.png)
 
+Notre modèle n'apprend pas du tout assez au vu des courbes d'apprentissages qui se superposent extremement bien néanmoins. 
+Nous allons essayer d'augmnter le taux d'apprentissage d'un facteur 10 car nous pouvaon être en présence d'un minimum local.
+
+
+**Hyper parameters**
+
+Train_window : 60 \
+Fut_pred : 60 \
+Lr = 0.001 \
+Epochs = 150 \
+Test_size = data_size / 5 \
+Hidden_layer_size = 25
+
+![image4](https://user-images.githubusercontent.com/74898266/102114921-13bbcf00-3e3b-11eb-998a-bf20dc6fd913.png)
+![image5](https://user-images.githubusercontent.com/74898266/102114948-1dddcd80-3e3b-11eb-98d8-5ec6f3787e07.png)
+
+Cette fois la courbe d'apprentissage est bien globalement décroissante mais présente de fortes oscillations imprévisibles. De plus la tendance observée de la prédiction semble avoir une moyenne inférieure à celle précédente. Nous décidons maintenant d'augmenter d'un facteur 2 la taille du jeu de validation.
 
 **Hyper parameters**
 
