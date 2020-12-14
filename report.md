@@ -54,11 +54,11 @@ Emplacement : ' CAPITAL OF TEXAS HWY / LAKEWOOD DR'
 Direction : South Bound
 
 Train_set : de septembre 2017 à septembre 2018 \
-Valid_set : de octobre 2018 à décembre 2018 \ 
+Valid_set : de octobre 2018 à décembre 2018 \
 Test_set : Janvier 2019
 
 Pour utiliser un modèle CNN pour prédire des données à 1 dimension, nous procédons de la manière suivante : \
-Nous séparons nos données en des sous-séquences de taille 3 (input) auxquelles nous associons une séquence de taille 1 (ouptput). Notre modèle doit apprendre à prédire l'output en fonction de l'input. Nous allons essayer plusieurs architectures de CNN et d'hyperparamètres sur nos données. 
+Nous séparons nos données en des sous-séquences de taille 3 (input) auxquelles nous associons une séquence de taille 1 (ouptput). Notre modèle doit apprendre à prédire l'output en fonction de l'input. Nous utilisons l'Adam Optimizer et le critère de loss Mean Square Error. Nous allons essayer plusieurs architectures de CNN et d'hyperparamètres sur nos données. 
 
 ## CNN
 Notre CNN, le plus simple possible, est construit de la manière suivante : 
@@ -138,12 +138,12 @@ Nous allons donc tester un autre modèle de deep learning.
 
 ## Explications : 
 
-On remarque dans la littérature aujourd'hui que les réseaux de neurones récurrents à mémoire court-et-long terme (LSTM) sont particulièrement adaptés pour réaliser des prédictions futures à partir de séries temporelles. En effet les réseaux de neurones réccurents sont par définition efficaces pour réaliser des prédiction de séries temporelles car ils prennent en compte le passer pour prédire le futur. Le problème qui se pose advient lors de la rétropogagation de l'erreur, qui à cause de valeur de gradient trop faibles, à du mal à impacter les décisions sur les entrées les plus anciennes, on appelle cela le problème du gradient evenscent. Le LSTM, par le biais d'une architecture de cellule différente, entend régler ce problème et donc promet une meilleure prise en compte des évenements anciens.
+On remarque dans la littérature aujourd'hui que les réseaux de neurones récurrents à mémoire court-et-long terme (LSTM) sont particulièrement adaptés pour réaliser des prédictions futures à partir de séries temporelles. En effet les réseaux de neurones réccurents sont par définition efficaces pour réaliser des prédiction de séries temporelles car ils prennent en compte le passer pour prédire le futur. Le problème qui se pose advient lors de la rétropogagation de l'erreur, qui à cause de valeur de gradient trop faibles, à du mal à impacter les décisions sur les entrées les plus anciennes, on appelle cela le problème du gradient evanescent. Le LSTM, par le biais d'une architecture de cellule différente, entend régler ce problème et donc promet une meilleure prise en compte des évenements anciens.
 
 Dans un RNN, on retrouve un architecture semblable à celle d'un réseau de neurone "classique" sauf que les neurones "bouclent" sur eux-même ce revient à chaque étape à considérer une entrée supplémentaire qui est l'état propre du neurone d'où le caractère réccurent du réseau.
 ![image](https://user-images.githubusercontent.com/74898266/102105941-457b6880-3e30-11eb-9ddb-cbe0d97fe024.png)
 
-Au sein du neurone LSTM, on va retrouver 3 portes (la Porte d'oubli, la Porte d'entrée et la Porte de sortie) en plus de deux états (l'état de la cellule et l'état caché). Les portes vont servir à "filtrer" les données pour ne garder que les données utiles à l'apprentissage et ainsi limiter considérablement les problèmes de graient evanessant.
+Au sein du neurone LSTM, on va retrouver 3 portes (la Porte d'oubli, la Porte d'entrée et la Porte de sortie) en plus de deux états (l'état de la cellule et l'état caché). Les portes vont servir à "filtrer" les données pour ne garder que les données utiles à l'apprentissage et ainsi limiter considérablement les problèmes de gradient evanescent.
 ![image1](https://user-images.githubusercontent.com/74898266/102106037-6217a080-3e30-11eb-905a-a3ded411547b.png)
 
 ## Démarche suivie
@@ -190,6 +190,7 @@ Hidden_layer_size = 25
 ![image5](https://user-images.githubusercontent.com/74898266/102114948-1dddcd80-3e3b-11eb-98d8-5ec6f3787e07.png)
 
 Cette fois la courbe d'apprentissage est bien globalement décroissante mais présente de fortes oscillations imprévisibles. De plus la tendance observée de la prédiction semble avoir une moyenne inférieure à celle précédente. Nous décidons maintenant d'augmenter d'un facteur 2 la taille du jeu de validation.
+
 
 **Hyper parameters**
 
@@ -239,6 +240,7 @@ Hidden_layer_size = 50
 ![Sans titre6](https://user-images.githubusercontent.com/47599816/102079396-ece6a400-3e0c-11eb-9d44-b0b845873de2.png)
 
 On peut également essayer d'augmenter le nombre de couches cachées mais celà n'a pas énormément d'impact et l'on retrouve le même type d'erreur que précédemment avec ces sauts et oscillations irréguliers à partir cette fois du 100ème epoch.
+
  
 **Hyper parameters**
 
@@ -254,6 +256,7 @@ Hidden_layer_size = 50 
 ![Sans titre8](https://user-images.githubusercontent.com/47599816/102079414-f708a280-3e0c-11eb-81ad-73067e54586a.png) 
 
 En réduisant le nombre d'epochs on obtient certes une courbe d'erreur lisse mais avec un modèle qui aprend peu et une tendance de prédiction qui semble moins réaliste.
+
  
 **Hyper parameters**
 
