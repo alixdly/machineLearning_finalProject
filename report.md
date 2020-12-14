@@ -1,7 +1,8 @@
-# Machine Learning - Mines Nancy
+# Machine Learning Course - Christophe Cerisara
 
 ### Rapport de projet : Arthur Mouchot, Alix Delannoy
-
+14 décembre 2020 - École des Mines de Nancy
+https://members.loria.fr/CCerisara/#courses/machine_learning/
 
 
 # Partie 1 : Les données
