@@ -143,9 +143,11 @@ Epochs = 250 \
 Test_size = data_size / 2.5 \
 Hidden_layer_size = 25 
  
- ![image](https://user-images.githubusercontent.com/47599816/102024023-9c7d3100-3d8f-11eb-83f5-131dfd964d7e.png)
- 
- ![image](https://user-images.githubusercontent.com/47599816/102024043-c46c9480-3d8f-11eb-922e-d33c528bc1ec.png)
+![Sans titre](https://user-images.githubusercontent.com/47599816/102079232-937e7500-3e0c-11eb-87bc-5c2fa6cd853f.png)
+
+
+![Sans titre2](https://user-images.githubusercontent.com/47599816/102079236-95483880-3e0c-11eb-87fa-28936aa1dd52.png)
+
 
 **Hyper parameters**
 
@@ -156,10 +158,11 @@ Epochs = 150 \
 Test_size = data_size / 2.5 \
 Hidden_layer_size = 25 
  
- ![image](https://user-images.githubusercontent.com/47599816/102024051-d1898380-3d8f-11eb-85ee-9c9b3d413476.png)
+![Sans titre3](https://user-images.githubusercontent.com/47599816/102079382-e48e6900-3e0c-11eb-8dff-9279c8c57c03.png)
  
-![image](https://user-images.githubusercontent.com/47599816/102024056-d3ebdd80-3d8f-11eb-9c92-ca1c247f9648.png)
- 
+![Sans titre4](https://user-images.githubusercontent.com/47599816/102079394-e9ebb380-3e0c-11eb-8d56-5a77ce6aa9ad.png)
+
+
 **Hyper parameters**
 
 Train_window : 60 \
@@ -169,10 +172,9 @@ Epochs = 250 \
 Test_size = data_size / 2.5 \
 Hidden_layer_size = 50 
 
-![image](https://user-images.githubusercontent.com/47599816/102024062-e49c5380-3d8f-11eb-90a5-9565fec6ce21.png)
+![Sans titre5](https://user-images.githubusercontent.com/47599816/102079395-eb1ce080-3e0c-11eb-8a78-2007a9d79820.png)
 
-![image](https://user-images.githubusercontent.com/47599816/102024063-e6fead80-3d8f-11eb-8784-3808198c0be2.png)
-
+![Sans titre6](https://user-images.githubusercontent.com/47599816/102079396-ece6a400-3e0c-11eb-9d44-b0b845873de2.png)
  
 **Hyper parameters**
 
@@ -183,10 +185,9 @@ Epochs = 100 \
 Test_size = data_size / 2.5 \
 Hidden_layer_size = 50 
 
-![image](https://user-images.githubusercontent.com/47599816/102024070-f41b9c80-3d8f-11eb-95ad-a03dfee38cd6.png)
+![Sans titre7](https://user-images.githubusercontent.com/47599816/102079409-f40db200-3e0c-11eb-8e87-b02680bfafde.png)
 
-![image](https://user-images.githubusercontent.com/47599816/102024072-f67df680-3d8f-11eb-8468-f657253983ca.png)
- 
+![Sans titre8](https://user-images.githubusercontent.com/47599816/102079414-f708a280-3e0c-11eb-81ad-73067e54586a.png) 
  
 **Hyper parameters**
 
@@ -197,9 +198,8 @@ Epochs = 500 \
 Test_size = data_size / 2.5 \
 Hidden_layer_size = 50
  
-![image](https://user-images.githubusercontent.com/47599816/102024075-009ff500-3d90-11eb-850d-9801d9784f56.png)
+![Sans titre9](https://user-images.githubusercontent.com/47599816/102079421-fbcd5680-3e0c-11eb-9ba2-4a717d6808ac.png)
 
-![image](https://user-images.githubusercontent.com/47599816/102024076-03024f00-3d90-11eb-98e9-ec756cccef98.png)
-
+![Sans titre10](https://user-images.githubusercontent.com/47599816/102079432-00920a80-3e0d-11eb-952f-606c9f99683d.png)
 
 
