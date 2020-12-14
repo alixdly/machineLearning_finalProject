@@ -141,6 +141,18 @@ Nous allons donc tester un autre modèle de deep learning.
 TODO : Pourquoi nous avons choisi un LSTM ? Quel est le fonctionnement rapide d'un LSTM? à quelles données nous sommmes nous intéréssés (par jour, heure...?)? comment avons nous séparé les données pour l'apprentissage ? Quel location/direction avons nous choisi ?
 +ajouter liens des articles/aides utilisées
 
+On remarque dans la littérature aujourd'hui que les réseaux de neurones récurrents à mémoire court-et-long terme (LSTM) sont particulièrement adaptés pour réaliser des prédictions futures à partir de séries temporelles. En effet les réseaux de neurones réccurents sont par définition efficaces pour réaliser des prédiction de séries temporelles car ils prennent en compte le passer pour prédire le futur. Le problème qui se pose advient lors de la rétropogagation de l'erreur, qui à cause de valeur de gradient trop faibles, à du mal à impacter les décisions sur les entrées les plus anciennes, on appelle cela le problème du gradient evenscent. Le LSTM, par le biais d'une architecture de cellule différente, entend régler ce problème et donc promet une meilleure prise en compte des évenements anciens.
+
+Dans un RNN, on retrouve un architecture semblable à celle d'un réseau de neurone "classique" sauf que les neurones "bouclent" sur eux-même ce revient à chaque étape à considérer une entrée supplémentaire qui est l'état propre du neurone d'où le caractère réccurent du réseau.
+![image](https://user-images.githubusercontent.com/74898266/102105941-457b6880-3e30-11eb-9ddb-cbe0d97fe024.png)
+
+Au sein du neurone LSTM, on va retrouver 3 portes (la Porte d'oubli, la Porte d'entrée et la Porte de sortie) en plus de deux états (l'état de la cellule et l'état caché). Les portes vont servir à "filtrer" les données pour ne garder que les données utiles à l'apprentissage et ainsi limiter considérablement les problèmes de graient evanessant.
+![image1](https://user-images.githubusercontent.com/74898266/102106037-6217a080-3e30-11eb-905a-a3ded411547b.png)
+
+## Démarche suivie
+
+Nous nous proposons de contruire un modèle LSTM permettant à partir de l'historique du traffic en un lieu et une direction, de prédire les deux prochains mois de circulation. Le modèle construit doit être fonctionnel pour n'importe quel lieu et quelle direction. Nous séparons la série temporelle en un jeu d'apprentissage et un jeu de validation avec un rapport de taile que nous nous autoriserons à faire varier.
+
 ## LSTM : 
 
 Description des paramètres du modèle
