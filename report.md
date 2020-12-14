@@ -29,6 +29,7 @@ De plus, voici un tableau qui résume les données :
 
 **A RETENIR** : <br/>
 * Il n'y a pas de "trous" dans nos données, toutes les lignes sont complètes (attention, cela ne veut pas dire que nous disposons des mêmes données pour chaque emplacement, ni qu'il ne manque pas de mesures. Mais chaque mesure est complète)
+-> par exemple, il peut manquer des jours, ou des heures, ou une minute... on considère que cela signifie que le traffic était égal à 0 à ce moment là (ce qui est surement faux dans la réalité)
 * Nous disposons de 4 603 861 lignes
 * Nous nous intéressons à une période de 3 ans (de 2017 à 2019)
 * Nous nous intéressons à 23 emplacements (location_name)
@@ -38,7 +39,7 @@ De plus, voici un tableau qui résume les données :
 # Partie 2 : Un premier modèle : Convolutional Neural Network (CNN)
 
 ## Explications
-Dans cette partie, nous avons décidé tout d'abord de nous intéresser à la donnée de traffic jour par jour pour un emplacement et une direction et de construire un CNN capable de prédire correctement le traffic futur. 
+Dans cette partie, nous avons décidé tout d'abord de nous intéresser à la donnée de traffic jour par jour pour un emplacement et une direction et de construire un CNN capable de prédire correctement le traffic futur. Nous avons décidé d'utiliser un modèle CNN en premier lieu car même si ce n'est pas le modèle le plus adapté pour la prédiction d'une série temporelle, il s'agit du modèle avec lequel nous étions le plus à l'aise à l'issue du cours. 
 Source : Nous avons utilisé le notebook Kaggle suivant pour comprendre et implémenter le CNN - https://www.kaggle.com/hanjoonchoe/cnn-time-series-forecasting-with-pytorch
 
 Nous préparons trois sets de données : 
@@ -133,6 +134,19 @@ Par exemple, pour cette instance, on peut voir que notre modèle n'est pas du to
 Nous allons donc tester un autre modèle de deep learning. 
 
 # Partie 3 : Une autre modèle : le LSTM
+
+## Explications : 
+
+TODO : Pourquoi nous avons choisi un LSTM ? Quel est le fonctionnement rapide d'un LSTM? à quelles données nous sommmes nous intéréssés (par jour, heure...?)? comment avons nous séparé les données pour l'apprentissage ? Quel location/direction avons nous choisi ?
++ajouter liens des articles/aides utilisées
+
+## LSTM : 
+
+Description des paramètres du modèle
+
+## Résultats 
+
+TO DO : détailler ce qui est bien et pas bon, ce qu'on tente pour améliorer 
 
 **Hyper parameters**
 
