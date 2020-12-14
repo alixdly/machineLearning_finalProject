@@ -237,6 +237,8 @@ Hidden_layer_size = 50
 ![Sans titre5](https://user-images.githubusercontent.com/47599816/102079395-eb1ce080-3e0c-11eb-8a78-2007a9d79820.png)
 
 ![Sans titre6](https://user-images.githubusercontent.com/47599816/102079396-ece6a400-3e0c-11eb-9d44-b0b845873de2.png)
+
+On peut également essayer d'augmenter le nombre de couches cachées mais celà n'a pas énormément d'impact et l'on retrouve le même type d'erreur que précédemment avec ces sauts et oscillations irréguliers à partir cette fois du 100ème epoch.
  
 **Hyper parameters**
 
@@ -250,6 +252,8 @@ Hidden_layer_size = 50 
 ![Sans titre7](https://user-images.githubusercontent.com/47599816/102079409-f40db200-3e0c-11eb-8e87-b02680bfafde.png)
 
 ![Sans titre8](https://user-images.githubusercontent.com/47599816/102079414-f708a280-3e0c-11eb-81ad-73067e54586a.png) 
+
+En réduisant le nombre d'epochs on obtient certes une courbe d'erreur lisse mais avec un modèle qui aprend peu et une tendance de prédiction qui semble moins réaliste.
  
 **Hyper parameters**
 
@@ -263,5 +267,9 @@ Hidden_layer_size = 50
 ![Sans titre9](https://user-images.githubusercontent.com/47599816/102079421-fbcd5680-3e0c-11eb-9ba2-4a717d6808ac.png)
 
 ![Sans titre10](https://user-images.githubusercontent.com/47599816/102079432-00920a80-3e0d-11eb-952f-606c9f99683d.png)
+
+Un dernier essai a été fait avec un nombre d'epochs au maximum des capacités de la machine et un taux d'erreur très bas. La courbe d'apprentissage est très acceptable avec des petites oscillations mais la tendance observée sur les prédictions ne correspond pas et la courbe est trop lisse par rapport aux données passés. 
+
+On pourrait conclure après les trois derniers essais qu'augmenter le nombre de couches cachées amène à une prédiction plus lisse par rapport aux oscillations observées sur les données réelles.
 
 
